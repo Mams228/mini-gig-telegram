@@ -14,7 +14,113 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      orders: {
+        Row: {
+          admin_notes: string | null
+          contact_info: string
+          created_at: string
+          customer_name: string
+          deadline: string | null
+          id: string
+          notes: string | null
+          result_link: string | null
+          service_id: string
+          status: Database["public"]["Enums"]["order_status"]
+          telegram_user_id: string
+          updated_at: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          contact_info: string
+          created_at?: string
+          customer_name: string
+          deadline?: string | null
+          id?: string
+          notes?: string | null
+          result_link?: string | null
+          service_id: string
+          status?: Database["public"]["Enums"]["order_status"]
+          telegram_user_id: string
+          updated_at?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          contact_info?: string
+          created_at?: string
+          customer_name?: string
+          deadline?: string | null
+          id?: string
+          notes?: string | null
+          result_link?: string | null
+          service_id?: string
+          status?: Database["public"]["Enums"]["order_status"]
+          telegram_user_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      services: {
+        Row: {
+          created_at: string
+          delivery_time_days: number
+          description: string
+          id: string
+          name: string
+          service_type: Database["public"]["Enums"]["service_type"]
+          starting_price: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          delivery_time_days?: number
+          description: string
+          id?: string
+          name: string
+          service_type: Database["public"]["Enums"]["service_type"]
+          starting_price: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          delivery_time_days?: number
+          description?: string
+          id?: string
+          name?: string
+          service_type?: Database["public"]["Enums"]["service_type"]
+          starting_price?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: string
+          telegram_user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: string
+          telegram_user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: string
+          telegram_user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +129,13 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      order_status: "new" | "in_progress" | "completed" | "cancelled"
+      service_type:
+        | "graphic_design"
+        | "article_writing"
+        | "translation"
+        | "video_editing"
+        | "website_development"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +262,15 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      order_status: ["new", "in_progress", "completed", "cancelled"],
+      service_type: [
+        "graphic_design",
+        "article_writing",
+        "translation",
+        "video_editing",
+        "website_development",
+      ],
+    },
   },
 } as const
